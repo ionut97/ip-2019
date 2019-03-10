@@ -13,36 +13,36 @@ git clone https://github.com/ionut97/ip-2019.git
 
 ## Setup
 
-Instalare python 3 + django:
+*Instalare python 3 + django*:
 
 [Django Quick Install](https://docs.djangoproject.com/en/2.1/intro/install/)
 
-IDE:
+*IDE*:
 
 [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
 Baza de date default este SQLite, nu este nevoie de alte drivere instalate.
 
-Client pentru lucrul baze de date sqlite:
+*Client pentru lucrul baze de date sqlite*:
 
 [DB Browser for SQLite](https://sqlitebrowser.org/)
 
-Din linia de comanda, intram in directorul cu proiectul:
+*Din linia de comanda, intram in directorul cu proiectul*:
 ```bash
 cd ip-2019
 ```
 
-Instalare dependente:
+*Instalare dependente*:
 ```bash
 pip install -r requirements.txt
 ```
 
-Creare modele
+*Creare modele*:
 ```bash
 python manage.py makemigrations web_app
 ```
 
-Aplica modificari
+*Aplica modificari*:
 ```bash
 python manage.py migrate
 ```
