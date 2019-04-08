@@ -42,8 +42,7 @@
         <div class="container">
             <div class="row d-flex">
                 <div class="col-lg-9 order-2 order-lg-1">
-                    <h1>Cars</h1>
-                    <p class="lead text-muted">All the available cars in the showroom</p>
+                    <h1>Advertisements</h1>
                 </div>
                 <div class="col-lg-3 text-right order-1 order-lg-2">
                     <ul class="breadcrumb justify-content-lg-end">
@@ -79,8 +78,16 @@
                                 <label for="suv">SUV</label>
                             </div>
                             <div class="form-group mb-1">
-                                <input id="muv" type="radio" name="make" class="radio-template" value="muv">
-                                <label for="muv">MUV</label>
+                                <input id="break" type="radio" name="make" class="radio-template" value="break">
+                                <label for="break">Break</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="coupe" type="radio" name="make" class="radio-template" value="coupe">
+                                <label for="coupe">Coupe</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="cabrio" type="radio" name="make" class="radio-template" value="cabrio">
+                                <label for="cabrio">Cabrio</label>
                             </div>
                         </div>
                         <div class="block">
@@ -95,13 +102,23 @@
                                        class="checkbox-template" value="diesel">
                                 <label for="diesel">Diesel</label>
                             </div>
+                            <div class="form-group mb-1">
+                                <input id="hybrid" type="checkbox" name="fuel" checked
+                                       class="checkbox-template" value="hybrid">
+                                <label for="hybrid">Hybrid</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="electric" type="checkbox" name="fuel" checked
+                                       class="checkbox-template" value="electric">
+                                <label for="electric">Electric</label>
+                            </div>
                         </div>
                         <div class="block">
                             <h6 class="text-uppercase">Filter By Price </h6>
                             <div id="slider-snap"></div>
                             <div class="value d-flex justify-content-between">
-                                <div class="min">From &#8377; <span id="slider-snap-value-lower" class="example-val"></span></div>
-                                <div class="max">To &#8377; <span id="slider-snap-value-upper" class="example-val"></span></div>
+                                <div class="min">From &euro; <span id="slider-snap-value-lower" class="example-val"></span></div>
+                                <div class="max">To &euro; <span id="slider-snap-value-upper" class="example-val"></span></div>
                             </div>
                         </div>
                             <a href="#" class="filter-submit" onclick="getparams(0,9);">filter</a>
@@ -140,13 +157,13 @@
         var snapSlider = document.getElementById('slider-snap');
 
         noUiSlider.create(snapSlider, {
-            start: [400000, 20000000],
+            start: [0, 250000],
             snap: false,
             connect: true,
             step: 1,
             range: {
-                'min': 100000,
-                'max': 25000000
+                'min': 0,
+                'max': 250000
             }
         });
         var snapValues = [
@@ -255,7 +272,7 @@
             else {
 
                 if (parsed.length === 0) {
-                    var markup = '<p id=error>Uh oh! No cars with matching queries found!</p><br>';
+                    var markup = '<p id=error>No cars with matching queries found!</p><br>';
                     $('.grid').append(markup);
                 }
                 else {
