@@ -42,11 +42,8 @@
                     <img class="card-img-top img-fluid" src="{{ car.picture.url }}" alt="">
                     <div class="card-body">
                         <h3 class="card-title">{{ car.name }}</h3>
-                        <h4>&#8377; {{ car.price }}</h4>
+                        <h4>&euro; {{ car.price }}</h4>
                         <p class="card-text">{{ car.description }}</p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="testdriveBtn">
-                            Book a test drive
-                        </button>
                         &nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" id="orderBtn">
                             Order now
@@ -144,48 +141,6 @@
         </div>
 
     </div>
-
-
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Book a test drive</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form id="testdriveForm" class="form form-control" role="form" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="date-input">
-                                Date:
-                            </label>
-                            <div class="col-sm-10">
-                                <input id="date-input" class="datepicker" maxlength="30" name="date" type="text">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success" id="regisBtn">Register</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button id="testdriveClose" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 
     <div class="modal fade" id="order">
         <div class="modal-dialog modal-lg">

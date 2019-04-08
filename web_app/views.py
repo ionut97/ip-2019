@@ -281,7 +281,7 @@ def compare(request):
             </tr>
             <tr>
                 <td>
-                    Price (in &#8377;)
+                    Price (in &euro;)
                 </td>
                 <td>
                     {car1_price}
