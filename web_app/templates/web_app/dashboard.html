@@ -47,7 +47,7 @@
                             <a href="{% url 'web_app:details' order.car.id %}"><img class="card-img-top" src="{{ order.car.picture.url }}" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="{% url 'web_app:details' test.car.id %}">{{ order.car.brand }} {{ order.car.name }}</a>
+                                    <a href="{% url 'web_app:details' order.car.id %}">{{ order.car.brand }} {{ order.car.name }}</a>
                                 </h4>
                                 <p class="card-text">
                                     Amount: &euro; {{ order.amount }}<br>
@@ -79,7 +79,7 @@
     <script>//to add support for adding ads
      /*   $("#orderForm").submit(function(e) {
 
-            var url = "{% url 'web_app:order' car.id %}";
+            var url = "{/% url 'web_app:order' car.id %/}";
             $.ajax({
                    type: "POST",
                    url: url,
