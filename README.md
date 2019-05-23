@@ -39,19 +39,19 @@ pip install -r requirements.txt
 
 *Creare modele*:
 ```bash
-python manage.py makemigrations web_app
+python3 manage.py makemigrations web_app
 ```
 
 *Aplica modificari*:
 ```bash
-python manage.py migrate
+python3 manage.py migrate
 ```
 
 ## Verificare
 
 
 ```bash
-python manage.py runserver
+python3 manage.py runserver
 ```
 
 Daca totul functioneaza, o sa avem un server web la adresa: [http://127.0.0.1:8000/](http://127.0.0.1:8000)

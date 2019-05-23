@@ -13,6 +13,9 @@ class UserForm(forms.ModelForm):
 
 
 class NewAdvertisement(forms.ModelForm):
+
+    engine_displacement = forms.IntegerField(required=False)
+
     class Meta:
         model = Car
 
