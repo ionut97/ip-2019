@@ -23,6 +23,11 @@ class Car(models.Model):
     def __str__(self):
         return self.brand + " " + self.name
 
+    @property
+    def picture_url(self):
+        if self.picture and hasattr(self.picture, 'url'):
+            return self.picture.url
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

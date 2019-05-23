@@ -69,6 +69,7 @@ def cars_page(request, pg=1):
     context = {
         'cars': car_list
     }
+
     return render(request, 'web_app/cars.html', context)
 
 
@@ -141,6 +142,8 @@ def car_details(request, cid):
     context = {
         'car': car
     }
+
+    print(car.picture.url)
     return render(request, 'web_app/car_details.html', context)
 
 
@@ -174,7 +177,6 @@ def dashboard(request):
     user = request.user
     new_ad = NewAdvertisement(request.POST or None, request.FILES or None)
     if new_ad.is_valid():
-        print("this shit is valid")
         car = new_ad.save(commit=False)
         car.added_by = user
         car.save()
@@ -184,10 +186,12 @@ def dashboard(request):
         return redirect('web_app:cars')
 
     orders = Order.objects.filter(user=user)
+    my_cars = Car.objects.filter(added_by=user)
 
     context = {
         'orders': orders,
-        'new_ad': new_ad
+        'new_ad': new_ad,
+        'my_cars': my_cars
     }
 
     return render(request, 'web_app/dashboard.html', context)

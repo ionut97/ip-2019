@@ -45,7 +45,7 @@
                 {% for order in orders %}
                     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
                         <div class="card h-100">
-                            <a href="{% url 'web_app:details' order.car.id %}"><img class="card-img-top img-fluid" src="{{ order.car.picture.url }}" alt=""></a>
+                            <a href="{% url 'web_app:details' order.car.id %}"><img class="card-img-top img-fluid" src="/{{ order.car.picture_url|default_if_none:'#' }}" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <a href="{% url 'web_app:details' order.car.id %}">{{ order.car.brand }} {{ order.car.name }}</a>
@@ -64,6 +64,23 @@
         </div>
 
         <h3 class="my-4">My Advertisements</h3>
+        <div class="row">
+            {% if my_cars %}
+                {% for car in my_cars %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+                        <div class="card h-100">
+                            <a href="{% url 'web_app:details' car.id %}"><img class="card-img-top img-fluid" src="/{{ car.picture_url|default_if_none:'#' }}" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="{% url 'web_app:details' car.id %}">{{ car.brand }} {{ car.name }}</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <h3 class="my-4">New Advertisements</h3>
         <form role="form" action="{% url 'web_app:dashboard'%}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% bootstrap_form new_ad %}
