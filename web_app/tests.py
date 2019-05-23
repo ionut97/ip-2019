@@ -8,10 +8,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from .models import Car, TestDrive, Order
+from .models import Car, Order
 
-
-# Create your tests here.
 class RegistrationTestCase(LiveServerTestCase):
 
     def setUp(self):
@@ -183,74 +181,6 @@ class AdminCarTest(TestCase):
         )
 
         self.assertEqual(car.__str__(), "Brand Name")
-
-
-class TestDriveTest(StaticLiveServerTestCase):
-
-    def setUp(self):
-        self.selenium = webdriver.Firefox()
-        self.su = User.objects.create_superuser(username='admin', email='admin@admin.com', password='djangoadmin')
-        self.su.is_active = True
-        self.su.save()
-        self.user = User.objects.create_superuser(username='testuser', email='test@user.com', password='testuser')
-        self.user.first_name = "Test"
-        self.user.last_name = "User"
-        self.user.is_active = True
-        self.user.save()
-        super(TestDriveTest, self).setUp()
-        # Create a car so that a view will be available
-        car = Car.objects.create(
-            picture=File(open(settings.BASE_DIR + '/media/car.jpg', 'rb')),
-            brand='Brand',
-            name='Name',
-            car_make='hatchback',
-            price='65000',
-            fuel='petrol',
-            dimensions='100 x 100 x 100',
-            transmission='Automatic',
-            gears=5,
-            seats=5,
-            power=100,
-            tank_capacity=100,
-            engine_displacement=2000,
-            added_by=self.su,
-            description='Test car',
-        )
-
-        self.pk = car.id
-        self.url = self.live_server_url + reverse("web:details", args=[self.pk])
-        # Login with the account
-        self.selenium.get(self.live_server_url + reverse("web:login"))
-        username = self.selenium.find_element_by_id('id_username')
-        password = self.selenium.find_element_by_id('id_password')
-        submit = self.selenium.find_element_by_id('submit')
-
-        username.send_keys('testuser')
-        password.send_keys('testuser')
-        submit.click()
-
-    def tearDown(self):
-        self.selenium.quit()
-        super(TestDriveTest, self).tearDown()
-
-    def test_testdrive(self):
-        print("\nTest drive button test...")
-        selenium = self.selenium
-        selenium.get(self.url)
-
-        testdrive_btn = selenium.find_element_by_id("testdriveBtn")
-        date_input = selenium.find_element_by_id("date-input")
-        submit = selenium.find_element_by_id("regisBtn")
-
-        testdrive_btn.click()
-        date_input.send_keys("22/04/1997")
-        submit.send_keys(Keys.ENTER)
-        time.sleep(1)
-        alert = selenium.switch_to.alert
-        # self.assertEqual("Your testdrive has been booked!", alert.text)
-        time.sleep(1)
-        td = TestDrive.objects.get(user=self.user)
-        self.assertEqual(td.__str__(), "Test User - Name")
 
 
 class OrderTest(StaticLiveServerTestCase):

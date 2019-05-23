@@ -3,14 +3,12 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from .forms import UserForm, CompareForm, NewAdvertisement
+from .models import Car, Order
+import operator
+from functools import reduce
 
-from datetime import datetime
 
-from .forms import UserForm, TestDriveForm, CompareForm
-from .models import Car, TestDrive, Order
-
-
-# Create your views here.
 def index(request):
     return render(request, 'web_app/index.html')
 
@@ -71,7 +69,6 @@ def cars_page(request, pg=1):
     context = {
         'cars': car_list
     }
-
     return render(request, 'web_app/cars.html', context)
 
 
@@ -124,24 +121,14 @@ def cars(request):
         if request.GET.get('fuel'):
             fuel = request.GET.getlist('fuel')
         else:
-            fuel = ['petrol', 'diesel']
+            fuel = ['petrol', 'diesel', 'electric', 'hybrid']
 
-        if len(fuel) > 1:
-            objs = Car.objects.filter(
-                Q(car_make__icontains=make) &
-                Q(price__gte=cost_min) &
-                Q(price__lte=cost_max) &
-                (Q(fuel__icontains=fuel[0]) | Q(fuel__icontains=fuel[1]))
-            )[start:end]
-
-        else:
-            objs = Car.objects.filter(
-                car_make__icontains=make,
-                price__gte=cost_min,
-                price__lte=cost_max,
-                fuel__icontains=fuel[0]
-            )[start:end]
-
+        objs = Car.objects.filter(
+            Q(car_make__icontains=make) &
+            Q(price__gte=cost_min) &
+            Q(price__lte=cost_max) &
+            (reduce(operator.or_, (Q(fuel__icontains=x) for x in fuel)))
+        )[start:end]
     else:
         objs = Car.objects.all()[:9]
 
@@ -151,10 +138,8 @@ def cars(request):
 
 def car_details(request, cid):
     car = Car.objects.get(pk=cid)
-    form = TestDriveForm(initial={'car': car})
     context = {
-        'car': car,
-        'form': form
+        'car': car
     }
     return render(request, 'web_app/car_details.html', context)
 
@@ -182,40 +167,27 @@ def order_car(request, cid):
     return HttpResponseForbidden()
 
 
-def testdrive(request, cid):
-    if not request.user.is_authenticated:
-        return redirect('web_app:login')
-    user = request.user
-    car = Car.objects.get(pk=cid)
-
-    if request.method == 'POST':
-        try:
-            date = request.POST['date']
-            new_date = datetime.strptime(date, '%d/%m/%Y').strftime('%Y-%m-%d')
-            test = TestDrive(
-                user=user,
-                car=car,
-                time=new_date
-            ).save()
-
-            return HttpResponse("Your testdrive has been booked!")
-        except Exception as e:
-            return HttpResponse("Uh Oh! Something's wrong! Report to the developer with the following error" +
-                                e.__str__())
-    return HttpResponseForbidden()
-
-
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('web_app:login')
 
     user = request.user
-    test = TestDrive.objects.filter(user=user)
+    new_ad = NewAdvertisement(request.POST or None, request.FILES or None)
+    if new_ad.is_valid():
+        print("this shit is valid")
+        car = new_ad.save(commit=False)
+        car.added_by = user
+        car.save()
+        car.picture.name = car.picture.name.strip('web_app')
+        print(car.picture.name, type(car.picture.name))
+        car.save()
+        return redirect('web_app:cars')
+
     orders = Order.objects.filter(user=user)
 
     context = {
-        'tests': test,
-        'orders': orders
+        'orders': orders,
+        'new_ad': new_ad
     }
 
     return render(request, 'web_app/dashboard.html', context)

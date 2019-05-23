@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
 
 from . import views
@@ -15,7 +13,6 @@ urlpatterns = [
     path('car_dy/', views.cars, name='car_dy'),
     path('car_s/', views.car_search, name='search'),
     path('car/<int:cid>', views.car_details, name='details'),
-    # path('testdrive/<int:cid>', views.testdrive, name="testdrive"),
     path('ordercar/<int:cid>', views.order_car, name='order'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('compare/', views.compare, name='compare'),

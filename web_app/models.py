@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
+
 
 class Car(models.Model):
-    picture = models.FileField(null=True)
+    picture = models.FileField(null=True, upload_to=settings.IMAGES_URL)
     brand = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     car_make = models.CharField(max_length=100, null=True)
@@ -20,16 +22,6 @@ class Car(models.Model):
 
     def __str__(self):
         return self.brand + " " + self.name
-
-
-class TestDrive(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    time = models.DateField()
-    approved = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name + ' - ' + self.car.name
 
 
 class Order(models.Model):

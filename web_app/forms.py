@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import TestDrive, Car
+from .models import Car
 
 
 class UserForm(forms.ModelForm):
@@ -12,11 +12,12 @@ class UserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
 
 
-class TestDriveForm(forms.ModelForm):
-
+class NewAdvertisement(forms.ModelForm):
     class Meta:
-        model = TestDrive
-        fields = ['car', 'time']
+        model = Car
+
+        fields = '__all__'
+        exclude = ('added_by',)
 
 
 class CompareForm(forms.Form):
