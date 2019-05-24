@@ -216,21 +216,27 @@ def compare(request):
         data = {
             'car1_id': car1.id,
             'car1_name': car1.name,
+            'car1_make': car1.make,
             'car1_pic': car1.picture.url,
             'car1_price': car1.price,
             'car1_seats': car1.seats,
             'car1_power': car1.power,
             'car1_fuel': car1.fuel,
             'car1_year': car1.year,
+            'car1_mileage': car1.mileage,
+            'car1_contact': car1.contact,
             'car1_description': car1.description,
             'car2_id': car2.id,
             'car2_name': car2.name,
+            'car2_make': car2.make,
             'car2_pic': car2.picture.url,
             'car2_price': car2.price,
             'car2_seats': car2.seats,
             'car2_power': car2.power,
             'car2_fuel': car2.fuel,
             'car2_year': car2.year,
+            'car2_mileage': car2.mileage,
+            'car2_contact': car2.contact,
             'car2_description': car2.description
         }
 
@@ -241,20 +247,30 @@ def compare(request):
                 <td>
                 </td>
                 <td>
-                    <a href="car/{car1_id}">{car1_name}</a>
+                    <a href="/car/{car1_id}">{car1_name}</a>
                 </td>
                 <td>
-                    <a href="car/{car2_id}">{car2_name}</a>
+                    <a href="/car/{car2_id}">{car2_name}</a>
                 </td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>
-                    <img class="img-fluid" src="{car1_pic}" alt="">
+                    <img class="img-fluid" src="/{car1_pic}" alt="">
                 </td>
                 <td>
-                    <img class="img-fluid" src="{car2_pic}" alt="">
+                    <img class="img-fluid" src="/{car2_pic}" alt="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    {car1_make}
+                </td>
+                <td>
+                    {car2_make}
                 </td>
             </tr>
             <tr>
@@ -310,6 +326,28 @@ def compare(request):
                 </td>
                 <td>
                     {car2_year}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mileage
+                </td>
+                <td>
+                    {car1_mileage}
+                </td>
+                <td>
+                    {car2_mileage}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contact
+                </td>
+                <td>
+                    {car1_contact}
+                </td>
+                <td>
+                    {car2_contact}
                 </td>
             </tr>
             <tr>
