@@ -21,7 +21,13 @@ class NewAdvertisement(forms.ModelForm):
     mileage = forms.IntegerField(required=True)
     name = forms.CharField(max_length=100)
     price = forms.IntegerField(required=False)
-    fuel = forms.CharField(max_length=20, required=False)
+    fuel = forms.ChoiceField(required=False)
+    fuel._set_choices(value=(
+        ("Petrol", "Petrol"),
+        ("Diesel", "Diesel"),
+        ("Electric", "Electric"),
+        ("Hybrid", "Hybrid")
+    ))
     seats = forms.IntegerField(required=False)
     power = forms.IntegerField(required=False)
 
