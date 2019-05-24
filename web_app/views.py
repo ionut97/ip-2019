@@ -7,63 +7,9 @@ from .forms import UserForm, CompareForm, NewAdvertisement
 from .models import Car, SavedAdvertisement
 import operator
 from functools import reduce
-import pickle
+from .ml import ModelManager
 
-MODEL = None
-DATASET = None
-MATRIX = None
-
-
-def getMakes():
-    makes = []
-
-    for index, row in DATASET.iterrows():
-        if row['Make'] not in makes:
-            makes.append(row['Make'])
-
-    return makes
-
-
-def getModels(make):
-    models = []
-
-    for index, row in DATASET.iterrows():
-        if (row['Make'] == make and row['Model'] not in models):
-            models.append(row['Model'])
-
-    return models
-
-
-def estimatePrice(make, carmodel, year, mileage):
-    index_X = 0
-
-    for index, row in DATASET.iterrows():
-        if (row['Make'] == make and row['Model'] == carmodel):
-            index_X = index
-
-    variable = MATRIX[index_X]
-    variable[-1] = mileage
-    variable[-2] = year
-    variable2 = []
-    variable2.append(variable)
-    variable2.append(variable)
-    return int(MODEL.predict(variable2)[0])
-
-
-def init_model():
-    print("Loading model")
-    global MODEL
-    global DATASET
-    global MATRIX
-
-    MODEL = pickle.load(open("ML/model.pkl", "rb"))
-    DATASET = pickle.load(open("ML/dataset.pkl", "rb"))
-    MATRIX = pickle.load(open("ML/matrix.pkl", "rb"))
-
-    print("estimare: ", estimatePrice("Audi", "A3", 2010, 2500))
-
-init_model()
-
+model = ModelManager()
 
 def index(request):
     return render(request, 'web_app/index.html')
@@ -239,7 +185,7 @@ def dashboard(request):
         car.save()
 
         if not car.price:
-            car.price = estimatePrice(car.make, car.car_model, car.year, car.mileage)
+            car.price = model.estimatePrice(car.make, car.car_model, car.year, car.mileage)
 
         car.picture.name = car.picture.name.strip('web_app')
         car.save()
