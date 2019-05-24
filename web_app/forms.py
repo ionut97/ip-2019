@@ -19,8 +19,6 @@ class NewAdvertisement(forms.ModelForm):
     car_model = forms.CharField(required=True)
     year = forms.IntegerField(required=True)
     mileage = forms.IntegerField(required=True)
-    #help
-    #picture = forms.FileField(required=False, upload_to=settings.IMAGES_URL)
     name = forms.CharField(max_length=100)
     price = forms.IntegerField(required=False)
     fuel = forms.ChoiceField(required=False)
@@ -32,7 +30,6 @@ class NewAdvertisement(forms.ModelForm):
     ))
     seats = forms.IntegerField(required=False)
     power = forms.IntegerField(required=False)
-    description = forms.Textarea()
 
     class Meta:
         model = Car
