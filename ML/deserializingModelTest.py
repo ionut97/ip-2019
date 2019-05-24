@@ -1,8 +1,8 @@
 import pickle
 #loading a model from a file called model.pkl
 model = pickle.load(open("model.pkl","rb"))
-dataset = pickle.load(open("dataset.pkl","rb"))
 
+dataset = pickle.load(open("dataset.pkl","rb"))
 
 
 #aceste 2 functii vor fi utile pentru frontend --------------------------------
@@ -29,6 +29,7 @@ def getModels(make):
     
     return models
 
+print(getModels('Audi'))
 #------------------------------------------------------------------------------
 
 
@@ -57,6 +58,22 @@ def estimatePrice(make,carmodel,year,mileage):
 #iar, eu am creat o matrice cu 2 linii care reprezinta de 2 ori datele despre masina
 
 
-print("Pret: ", int(estimatePrice('Audi','A3Sedan',2010,25000)[0]))
+print(estimatePrice('Audi','A3Sedan',2015,25000))
 
-print(getMakes())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
