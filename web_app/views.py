@@ -269,27 +269,23 @@ def compare(request):
 
         data = {
             'car1_id': car1.id,
-            'car1_name': car1.brand + " " + car1.name,
+            'car1_name': car1.name,
             'car1_pic': car1.picture.url,
             'car1_price': car1.price,
             'car1_seats': car1.seats,
-            'car1_tank_capacity': car1.tank_capacity,
-            'car1_transmission': car1.transmission,
-            'car1_gears': car1.gears,
-            'car1_engine_displacement': car1.engine_displacement,
             'car1_power': car1.power,
-            'car1_dimensions': car1.dimensions,
+            'car1_fuel': car1.fuel,
+            'car1_year': car1.year,
+            'car1_description': car1.description,
             'car2_id': car2.id,
-            'car2_name': car2.brand + " " + car2.name,
+            'car2_name': car2.name,
             'car2_pic': car2.picture.url,
             'car2_price': car2.price,
             'car2_seats': car2.seats,
-            'car2_tank_capacity': car2.tank_capacity,
-            'car2_transmission': car2.transmission,
-            'car2_gears': car2.gears,
-            'car2_engine_displacement': car2.engine_displacement,
             'car2_power': car2.power,
-            'car2_dimensions': car2.dimensions,
+            'car2_fuel': car2.fuel,
+            'car2_year': car2.year,
+            'car2_description': car2.description
         }
 
         html = '''
@@ -339,50 +335,6 @@ def compare(request):
             </tr>
             <tr>
                 <td>
-                    Fuel Tank Capacity (litres)
-                </td>
-                <td>
-                    {car1_tank_capacity}
-                </td>
-                <td>
-                    {car2_tank_capacity}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Transmission type
-                </td>
-                <td>
-                    {car1_transmission}
-                </td>
-                <td>
-                    {car2_transmission}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Gears
-                </td>
-                <td>
-                    {car1_gears}
-                </td>
-                <td>
-                    {car2_gears}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Engine displacement (cc)
-                </td>
-                <td>
-                    {car1_engine_displacement}
-                </td>
-                <td>
-                    {car2_engine_displacement}
-                </td>
-            </tr>
-            <tr>
-                <td>
                     Maximum power (PS)
                 </td>
                 <td>
@@ -394,13 +346,35 @@ def compare(request):
             </tr>
             <tr>
                 <td>
-                    Dimensions (mm)
+                    Fuel
                 </td>
                 <td>
-                    {car1_dimensions}
+                    {car1_fuel}
                 </td>
                 <td>
-                    {car2_dimensions}
+                    {car2_fuel}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Year of fabrication
+                </td>
+                <td>
+                    {car1_year}
+                </td>
+                <td>
+                    {car2_year}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description
+                </td>
+                <td>
+                    {car1_description}
+                </td>
+                <td>
+                    {car2_description}
                 </td>
             </tr>
             </tbody>
