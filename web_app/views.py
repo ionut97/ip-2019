@@ -180,6 +180,10 @@ def dashboard(request):
         car = new_ad.save(commit=False)
         car.added_by = user
         car.save()
+
+        if not car.price:
+            car.price = 0
+
         car.picture.name = car.picture.name.strip('web_app')
         print(car.picture.name, type(car.picture.name))
         car.save()

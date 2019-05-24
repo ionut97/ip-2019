@@ -8,7 +8,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from .models import Car, Order
+from .models import Car, SavedAdvertisement
 
 class RegistrationTestCase(LiveServerTestCase):
 
@@ -183,7 +183,7 @@ class AdminCarTest(TestCase):
         self.assertEqual(car.__str__(), "Brand Name")
 
 
-class OrderTest(StaticLiveServerTestCase):
+class SavedAdvertisementTest(StaticLiveServerTestCase):
     def setUp(self):
         self.selenium = webdriver.Firefox()
         self.su = User.objects.create_superuser(username='admin', email='admin@admin.com', password='djangoadmin')
@@ -194,7 +194,7 @@ class OrderTest(StaticLiveServerTestCase):
         self.user.last_name = "User"
         self.user.is_active = True
         self.user.save()
-        super(OrderTest, self).setUp()
+        super(SavedAdvertisementTest, self).setUp()
         # Create a car so that a view will be available
         car = Car.objects.create(
             picture=File(open(settings.BASE_DIR + '/media/car.jpg', 'rb')),
@@ -228,23 +228,23 @@ class OrderTest(StaticLiveServerTestCase):
 
     def tearDown(self):
         self.selenium.quit()
-        super(OrderTest, self).tearDown()
+        super(SavedAdvertisementTest, self).tearDown()
 
-    def test_order(self):
-        print("\nOrder button test...")
+    def test_saved_ad(self):
+        print("\nSavedAdvertisement button test...")
         selenium = self.selenium
 
         selenium.get(self.url)
 
-        order_btn = selenium.find_element_by_id("orderBtn")
+        saved_ad_btn = selenium.find_element_by_id("orderBtn")
         address = selenium.find_element_by_id("address")
         submit = selenium.find_element_by_id("clickBtn")
 
-        order_btn.click()
+        saved_ad_btn.click()
         address.send_keys("Address...")
         submit.send_keys(Keys.ENTER)
         time.sleep(1)
         alert = selenium.switch_to.alert
         time.sleep(1)
-        td = Order.objects.get(user=self.user)
+        td = SavedAdvertisement.objects.get(user=self.user)
         self.assertEqual(td.__str__(), "Test User - Name")
