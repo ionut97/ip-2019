@@ -13,7 +13,7 @@ urlpatterns = [
     path('car_dy/', views.cars, name='car_dy'),
     path('car_s/', views.car_search, name='search'),
     path('car/<int:cid>', views.car_details, name='details'),
-    path('ordercar/<int:cid>', views.order_car, name='order'),
+    path('save_advertisement/<int:cid>', views.save_advertisement, name='save_advertisement'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('compare/', views.compare, name='compare'),
 ]

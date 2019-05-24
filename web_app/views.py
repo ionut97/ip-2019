@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from .forms import UserForm, CompareForm, NewAdvertisement
-from .models import Car, Order
+from .models import Car, SavedAdvertisement
 import operator
 from functools import reduce
 
@@ -124,8 +124,8 @@ def cars(request):
         else:
             fuel = ['petrol', 'diesel', 'electric', 'hybrid']
 
-        objs = Car.objects.filter(
-            Q(car_make__icontains=make) &
+        objs = Car.objects.filter( 
+            Q(make__icontains=make) &
             Q(price__gte=cost_min) &
             Q(price__lte=cost_max) &
             (reduce(operator.or_, (Q(fuel__icontains=x) for x in fuel)))
@@ -147,7 +147,7 @@ def car_details(request, cid):
     return render(request, 'web_app/car_details.html', context)
 
 
-def order_car(request, cid):
+def save_advertisement(request, cid):
     if not request.user.is_authenticated:
         return redirect('web_app:login')
     user = request.user
@@ -156,14 +156,14 @@ def order_car(request, cid):
     if request.method == 'POST':
         try:
             address = request.POST['address']
-            new = Order(
+            new = SavedAdvertisement(
                 user=user,
                 car=car,
                 amount=car.price,
                 address=address
             ).save()
 
-            return HttpResponse("Your order has been placed!")
+            return HttpResponse("The ad has been saved!")
         except Exception as e:
             return HttpResponse("Uh Oh! Something's wrong! Report to the developer with the following error" +
                                 e.__str__())
@@ -185,11 +185,11 @@ def dashboard(request):
         car.save()
         return redirect('web_app:cars')
 
-    orders = Order.objects.filter(user=user)
+    saved_ads = SavedAdvertisement.objects.filter(user=user)
     my_cars = Car.objects.filter(added_by=user)
 
     context = {
-        'orders': orders,
+        'saved_ads': saved_ads,
         'new_ad': new_ad,
         'my_cars': my_cars
     }

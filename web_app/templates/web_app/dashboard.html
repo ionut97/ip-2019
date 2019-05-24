@@ -38,23 +38,23 @@
     <div class="container">
 
         <!-- Page Heading -->
-        <h3 class="my-4">Orders</h3>
+        <h3 class="my-4">Saved ads</h3>
 
         <div class="row">
-            {% if orders %}
-                {% for order in orders %}
+            {% if saved_ads %}
+                {% for saved_ad in saved_ads %}
                     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
                         <div class="card h-100">
-                            <a href="{% url 'web_app:details' order.car.id %}"><img class="card-img-top img-fluid" src="/{{ order.car.picture_url|default_if_none:'#' }}" alt=""></a>
+                            <a href="{% url 'web_app:details' saved_ad.car.id %}"><img class="card-img-top img-fluid" src="/{{ saved_ad.car.picture_url|default_if_none:'#' }}" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="{% url 'web_app:details' order.car.id %}">{{ order.car.brand }} {{ order.car.name }}</a>
+                                    <a href="{% url 'web_app:details' saved_ad.car.id %}">{{ saved_ad.car.make }} {{ saved_ad.car.name }}</a>
                                 </h4>
                                 <p class="card-text">
-                                    Amount: &euro; {{ order.amount }}<br>
-                                    Date of order: {{ order.order_time }}<br>
-                                    Address: {{ order.address }}<br>
-                                    Delivered: {% if order.is_delivered %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}
+                                    Amount: &euro; {{ saved_ad.amount }}<br>
+                                    Date of saved_ad: {{ saved_ad.saved_ad }}<br>
+                                    Address: {{ saved_ad.address }}<br>
+                                    Bought: {% if saved_ad.is_bought %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}
                                 </p>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                             <a href="{% url 'web_app:details' car.id %}"><img class="card-img-top img-fluid" src="/{{ car.picture_url|default_if_none:'#' }}" alt=""></a>
                             <div class="card-body">
                                 <h4 class="card-title">
-                                    <a href="{% url 'web_app:details' car.id %}">{{ car.brand }} {{ car.name }}</a>
+                                    <a href="{% url 'web_app:details' car.id %}">{{ car.make }} {{ car.name }}</a>
                                 </h4>
                             </div>
                         </div>

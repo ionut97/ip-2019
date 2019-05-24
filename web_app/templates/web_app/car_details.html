@@ -1,6 +1,6 @@
 {% extends 'web_app/base_alt.html' %}
 {% load staticfiles %}
-{% block title %}{{ car.brand }} {{ car.name }}{% endblock %}
+{% block title %}{{ car.make }} {{ car.name }}{% endblock %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" id="theme-stylesheet">
@@ -32,7 +32,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <h3 class="my-4">{{ car.brand }}</h3>
+                <h3 class="my-4">{{ car.make }}</h3>
             </div>
             <!-- /.col-lg-3 -->
 
@@ -45,8 +45,8 @@
                         <h4>&euro; {{ car.price }}</h4>
                         <p class="card-text">{{ car.description }}</p>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" id="orderBtn">
-                            Order now
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#save_advertisement" id="save_advertisementBtn">
+                            Save ad now
                         </button>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                     Car type
                                 </td>
                                 <td>
-                                    {{ car.car_make }}
+                                    {{ car.make }}
                                 </td>
                             </tr>
                             <tr>
@@ -81,38 +81,6 @@
                                 </td>
                                 <td>
                                     {{ car.seats }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Fuel Tank Capacity (litres)
-                                </td>
-                                <td>
-                                    {{ car.tank_capacity }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Transmission type
-                                </td>
-                                <td>
-                                    {{ car.transmission }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Gears
-                                </td>
-                                <td>
-                                    {{ car.gears }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Engine displacement (cc)
-                                </td>
-                                <td>
-                                    {{ car.engine_displacement }}
                                 </td>
                             </tr>
                             <tr>
@@ -142,32 +110,24 @@
 
     </div>
 
-    <div class="modal fade" id="order">
+    <div class="modal fade" id="save_advertisement">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Order the car?</h4>
+                    <h4 class="modal-title">save advertisement of the car?</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="orderForm" class="form form-control" role="form" action="{% url 'web_app:order' car.id %}" method="post" enctype="multipart/form-data">
+                    <form id="save_advertisementForm" class="form form-control" role="form" action="{% url 'web_app:save_advertisement' car.id %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="address">
-                                Address:
-                            </label>
-                            <div class="col-sm-10">
-                                <textarea rows="4" cols="50" id="address" name="address"></textarea>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success" id="clickBtn">Order</button>
+                                <button type="submit" class="btn btn-success" id="clickBtn">Save ad</button>
                             </div>
                         </div>
                     </form>
@@ -175,7 +135,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button id="orderClose" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button id="save_advertisementClose" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
@@ -198,19 +158,19 @@
         });
 
 
-        $("#orderForm").submit(function(e) {
+        $("#save_advertisementForm").submit(function(e) {
 
-            var url = "{% url 'web_app:order' car.id %}";
+            var url = "{% url 'web_app:save_advertisement' car.id %}";
             $.ajax({
                    type: "POST",
                    url: url,
-                   data: $("#orderForm").serialize(),
+                   data: $("#save_advertisementForm").serialize(),
                    success: function(data)
                    {
                        alert(data);
                    }
                  });
-            $("#orderClose").trigger("click");
+            $("#save_advertisementClose").trigger("click");
             e.preventDefault();
         });
 
