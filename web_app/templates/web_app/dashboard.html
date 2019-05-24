@@ -52,9 +52,7 @@
                                 </h4>
                                 <p class="card-text">
                                     Amount: &euro; {{ saved_ad.amount }}<br>
-                                    Date of saved_ad: {{ saved_ad.saved_ad }}<br>
-                                    Address: {{ saved_ad.address }}<br>
-                                    Bought: {% if saved_ad.is_bought %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}
+                                    Contact: {{ saved_ad.car.contact }}<br>
                                 </p>
                             </div>
                         </div>
