@@ -7,6 +7,62 @@ from .forms import UserForm, CompareForm, NewAdvertisement
 from .models import Car, SavedAdvertisement
 import operator
 from functools import reduce
+import pickle
+
+MODEL = None
+DATASET = None
+MATRIX = None
+
+
+def getMakes():
+    makes = []
+
+    for index, row in DATASET.iterrows():
+        if row['Make'] not in makes:
+            makes.append(row['Make'])
+
+    return makes
+
+
+def getModels(make):
+    models = []
+
+    for index, row in DATASET.iterrows():
+        if (row['Make'] == make and row['Model'] not in models):
+            models.append(row['Model'])
+
+    return models
+
+
+def estimatePrice(make, carmodel, year, mileage):
+    index_X = 0
+
+    for index, row in DATASET.iterrows():
+        if (row['Make'] == make and row['Model'] == carmodel):
+            index_X = index
+
+    variable = MATRIX[index_X]
+    variable[-1] = mileage
+    variable[-2] = year
+    variable2 = []
+    variable2.append(variable)
+    variable2.append(variable)
+    return int(MODEL.predict(variable2)[0])
+
+
+def init_model():
+    print("Loading model")
+    global MODEL
+    global DATASET
+    global MATRIX
+
+    MODEL = pickle.load(open("ML/model.pkl", "rb"))
+    DATASET = pickle.load(open("ML/dataset.pkl", "rb"))
+    MATRIX = pickle.load(open("ML/matrix.pkl", "rb"))
+
+    print("estimare: ", estimatePrice("Audi", "A3", 2010, 2500))
+
+init_model()
 
 
 def index(request):
@@ -89,7 +145,10 @@ def car_search(request):
             end = 9
 
         objs = Car.objects.filter(
-            Q(brand__icontains=search) | Q(name__icontains=search)
+            Q(make__icontains=search) |
+            Q(name__icontains=search) |
+            Q(description__icontains=search) |
+            Q(car_model__icontains=search)
         )[start:end]
         data = serializers.serialize('json', objs)
         return HttpResponse(data)
@@ -182,10 +241,9 @@ def dashboard(request):
         car.save()
 
         if not car.price:
-            car.price = 0
+            car.price = estimatePrice(car.make, car.car_model, car.year, car.mileage)
 
         car.picture.name = car.picture.name.strip('web_app')
-        print(car.picture.name, type(car.picture.name))
         car.save()
         return redirect('web_app:cars')
 
