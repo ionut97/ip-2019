@@ -61,10 +61,18 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    Car type
+                                    Car make
                                 </td>
                                 <td>
                                     {{ car.make }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Model
+                                </td>
+                                <td>
+                                    {{ car.car_model }}
                                 </td>
                             </tr>
                             <tr>
@@ -85,7 +93,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Maximum power (PS)
+                                    Maximum power (HP)
                                 </td>
                                 <td>
                                     {{ car.power }}
@@ -93,10 +101,18 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Dimensions (mm)
+                                    Mileage
                                 </td>
                                 <td>
-                                    {{ car.dimensions }}
+                                    {{ car.mileage }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Year
+                                </td>
+                                <td>
+                                    {{ car.year }}
                                 </td>
                             </tr>
                             <tr>
@@ -107,7 +123,14 @@
                                     {{ car.added_by }}
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td>
+                                    Contact
+                                </td>
+                                <td>
+                                    {{ car.contact }}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

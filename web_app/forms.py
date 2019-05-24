@@ -2,8 +2,6 @@ from django import forms
 from django.contrib.auth.models import User
 
 from .models import Car
-from django.conf import settings
-
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -15,13 +13,15 @@ class UserForm(forms.ModelForm):
 
 class NewAdvertisement(forms.ModelForm):
 
-    make = forms.CharField(required=True)
-    car_model = forms.CharField(required=True)
-    year = forms.IntegerField(required=True)
-    mileage = forms.IntegerField(required=True)
-    name = forms.CharField(max_length=100)
+    make = forms.ChoiceField(required=True)
+    make._set_choices(value=(
+        ("Audi", "Audi"),
+        ("BMW", "BMW"),
+        ("Volkswagen", "Volkswagen")
+    ))
+
     price = forms.IntegerField(required=False)
-    fuel = forms.ChoiceField(required=False)
+    fuel = forms.ChoiceField(required=True)
     fuel._set_choices(value=(
         ("Petrol", "Petrol"),
         ("Diesel", "Diesel"),

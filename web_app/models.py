@@ -15,6 +15,7 @@ class Car(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     mileage = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
+    contact = models.CharField(max_length=100, null=True)
     description = models.TextField()
 
     def __str__(self):
