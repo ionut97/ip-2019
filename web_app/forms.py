@@ -23,7 +23,13 @@ class NewAdvertisement(forms.ModelForm):
     #picture = forms.FileField(required=False, upload_to=settings.IMAGES_URL)
     name = forms.CharField(max_length=100)
     price = forms.IntegerField(required=False)
-    fuel = forms.CharField(max_length=20, required=False)
+    fuel = forms.ChoiceField(required=False)
+    fuel._set_choices(value=(
+        ("Petrol", "Petrol"),
+        ("Diesel", "Diesel"),
+        ("Electric", "Electric"),
+        ("Hybrid", "Hybrid")
+    ))
     seats = forms.IntegerField(required=False)
     power = forms.IntegerField(required=False)
     description = forms.Textarea()
