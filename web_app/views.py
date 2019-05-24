@@ -214,12 +214,10 @@ def save_advertisement(request, cid):
 
     if request.method == 'POST':
         try:
-            address = request.POST['address']
             new = SavedAdvertisement(
                 user=user,
                 car=car,
                 amount=car.price,
-                address=address
             ).save()
 
             return HttpResponse("The ad has been saved!")

@@ -45,7 +45,7 @@
                         <h4>&euro; {{ car.price }}</h4>
                         <p class="card-text">{{ car.description }}</p>
                         &nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#save_advertisement" id="save_advertisementBtn" onclick="save_ad">
+                        <button type="button" class="btn btn-primary" data-target="#save_advertisement" id="save_advertisementBtn" onclick="save_ad()">
                             Save ad now
                         </button>
                     </div>
@@ -180,21 +180,21 @@
                  });
         }
 
-        $("#save_advertisementForm").submit(function(e) {
+        // $("#save_advertisementForm").submit(function(e) {
 
-            var url = "{% url 'web_app:save_advertisement' car.id %}";
-            $.ajax({
-                   type: "POST",
-                   url: url,
-                   data: $("#save_advertisementForm").serialize(),
-                   success: function(data)
-                   {
-                       alert(data);
-                   }
-                 });
-            $("#save_advertisementClose").trigger("click");
-            e.preventDefault();
-        });
+        //     var url = "{% url 'web_app:save_advertisement' car.id %}";
+        //     $.ajax({
+        //            type: "POST",
+        //            url: url,
+        //            data: $("#save_advertisementForm").serialize(),
+        //            success: function(data)
+        //            {
+        //                alert(data);
+        //            }
+        //          });
+        //     $("#save_advertisementClose").trigger("click");
+        //     e.preventDefault();
+        // });
 
     </script>
 
